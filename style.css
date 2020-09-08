@@ -1,0 +1,217 @@
+
+body {
+    font-family: monospace;
+}
+
+.calculator-container {
+    display: grid;
+    grid-template-columns: [left-padding] 20px [col1] 1fr [col2] 1fr [col3] 1fr [col4] 1fr [right-padding] 20px;
+    grid-template-rows: [top-padding] 20px [row1] 1fr [row2] 1fr [row3] 1fr [row4] 1fr [row5] 1fr [row6] 1fr [bottom-padding] 20px;
+    margin: 0 auto;
+    margin-top: 10vh;
+    width: 30%;
+    height: 512.8px;
+    background-color: #3c3c3b;
+    border-radius: 25px;
+}
+
+.display-container {
+    grid-row: row1 / row2;
+    grid-column: col1 / right-padding;
+    border-radius: 25px;
+    background-color: #ebebd3;
+    width: 390px;
+    height: 80px;
+
+
+}
+
+.top-container {
+    text-align: center;
+}
+
+#display {
+    font-size: 400%;
+    font-weight: 400;
+    margin-top: 14px;
+    margin-right: 5px;
+    float: right;
+}
+
+#error-message {
+    font-size: 200%;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-left: 7px;
+    text-align: center;
+    
+}
+
+.buttons {
+    cursor: default;
+    width: 90px;
+    height: 70px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+
+.buttons p {
+    font-size: 250%;
+    font-weight: 400;
+    line-height: 1em;
+    margin-top: 15px;
+}
+
+#equal {
+    background-color: #f5d547;
+}
+
+#equal:hover {
+    background-color: #929288;
+}
+
+#ac:hover {
+    background-color: #929288;
+}
+
+#ac {
+    background-color: #f5d547;
+}
+
+.buttons:hover {
+    background-color: #929288;
+}
+
+.operator-btn {
+    background-color: #f5d547;
+}
+
+.digit-btn {
+    background-color: #ebebd3;
+}
+
+
+
+/* First row buttons */
+
+#ac {
+    margin-left: 0;
+    grid-row: row2;
+    grid-column: col1;
+
+}
+
+#plus-minus {
+    grid-row: row2;
+    grid-column: col2;
+}
+
+#percentage {
+    grid-row: row2;
+    grid-column: col3;
+}
+
+#divide {
+    grid-row: row2;
+    grid-column: col4;
+}
+
+/* 2nd row buttons */
+
+#seven {
+    margin-left: 0;
+    grid-row: row3;
+    grid-column: col1;
+}
+
+#eight {
+    grid-row: row3;
+    grid-column: col2;
+}
+
+#nine {
+    grid-row: row3;
+    grid-column: col3;
+}
+
+#multiply {
+    grid-row: row3;
+    grid-column: col4;
+}
+
+/* 3rd row buttons */
+
+#four {
+    margin-left: 0;
+    grid-row: row4;
+    grid-column: col1;
+}
+
+#five {
+    grid-row: row4;
+    grid-column: col2;
+}
+
+#six {
+    grid-row: row4;
+    grid-column: col3;
+}
+
+#minus {
+    grid-row: row4;
+    grid-column: col4;
+}
+
+/* 4th row buttons */
+
+#one {
+    margin-left: 0;
+    grid-row: row5;
+    grid-column: col1;
+}
+
+#two {
+    grid-row: row5;
+    grid-column: col2;
+}
+
+#three {
+    grid-row: row5;
+    grid-column: col3;
+}
+
+#plus {
+    grid-row: row5;
+    grid-column: col4;
+}
+
+/* 5th row buttons */
+
+#zero {
+    margin-left: 0;
+    width: 190px;
+    grid-row: row6;
+    grid-column: col1 / span col3;
+}
+
+#decimal {
+    grid-row: row6;
+    grid-column: col3;
+}
+
+#equal {
+    grid-row: row6;
+    grid-column: col4;
+}
+
+
+
+
+
+
+
+
