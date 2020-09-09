@@ -50,7 +50,7 @@ body {
 .buttons {
     cursor: default;
     width: 90px;
-    height: 70px;
+    height: 60px;
     margin-top: 10px;
     margin-left: 10px;
     border-radius: 10px;
@@ -59,11 +59,19 @@ body {
 
 
 
-.buttons p {
+/* .buttons p {
     font-size: 250%;
     font-weight: 400;
     line-height: 1em;
     margin-top: 15px;
+} */
+
+.buttons {
+    font-size: 250%;
+    font-weight: 400;
+    /* line-height: 1em; */
+    padding-top: 10px;
+    /* margin-top: 10px; */
 }
 
 #equal {
@@ -78,7 +86,23 @@ body {
     background-color: #929288;
 }
 
+#percentage:hover {
+    background-color: #929288;
+}
+
+#delete:hover {
+    background-color: #929288;
+}
+
+#delete {
+    background-color: #f5d547;
+}
+
 #ac {
+    background-color: #f5d547;
+}
+
+#percentage {
     background-color: #f5d547;
 }
 
@@ -105,7 +129,7 @@ body {
 
 }
 
-#plus-minus {
+#delete {
     grid-row: row2;
     grid-column: col2;
 }

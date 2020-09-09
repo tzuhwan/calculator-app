@@ -2,6 +2,7 @@
  * 
  *Unresolved bugs:
  1. Error message display: add p tags then turn on visible
+ 2. User can still edit _displayVar after pressing equal 
 
  * 
  * 
@@ -17,6 +18,7 @@ let _secondNum = null;
 let _currOperator = null;
 let _isClear = false;
 let _isError = false;
+let _isDecimal = false;
 
 
 // Basic math functions 
@@ -38,6 +40,12 @@ function divide(x, y) {
         return "ERROR: Cannot divde by zero";
     }
     return Number(x / y);
+} 
+
+function percentage() {
+	_displayVar = _displayVar / 100;
+	const display = document.querySelector('#display');
+	display.textContent = _displayVar;
 }
 
 
@@ -57,7 +65,13 @@ function factorial(num) {
 	}
 }
 
-//
+function deleteOneNumber() {
+	_displayVar = _displayVar.toString().substr(0, _displayVar.length - 1);
+	const display = document.querySelector('#display');
+	display.textContent = _displayVar;
+}
+
+
 function operate(func, firstNum, secondNum) {
 	if (secondNum === null) {
 		_isError = true;
@@ -94,23 +108,34 @@ function operate(func, firstNum, secondNum) {
 }
 
 
-// Function to display selected digits
+const digitBtns = document.querySelectorAll('.digit-btn');
+digitBtns.forEach(digitBtn => {
+	digitBtn.addEventListener('click', displayDigits);
+});
+
 function displayDigits() {
 	const display = document.querySelector('#display');
+	
+	if (_isClear) {
+			clearDisplay();
+			_isClear = false;
+		}
+	if (!_isError) {
+		display.textContent = limitDigitDisplay(_displayVar += this.textContent);
+	}
 
-	const digitBtns = document.querySelectorAll('.digit-btn');
-	digitBtns.forEach(digitBtn => {
-		digitBtn.addEventListener('click', event => {
-			if (_isClear) {
-				clearDisplay();
-				_isClear = false;
-			}
-			if (!_isError) {
-				display.textContent = limitDigitDisplay(_displayVar += digitBtn.textContent);
-			}
-		})
-	})
+	if (_displayVar.indexOf('.') != -1) {
+		if (event.target.id === "decimal") {
+			event.target.removeEventListener('click', displayDigits);
+		}
+	}
 }
+
+
+
+
+
+
 
 
 // Clears display
@@ -129,18 +154,28 @@ function addOperatorListener() {
 	operatorBtns.forEach(operatorBtn => {
 		operatorBtn.addEventListener('click', event => {
 			storeNumOperator(operatorBtn.textContent);
+			const decimalBtn = document.querySelector('#decimal');
+			decimalBtn.addEventListener('click', displayDigits);
 			_isClear = true;
 			_displayVar = null;
 		})
 	})
 }
 
+// Allows user to use only one decimal point
+
+function allowOneDecimalPoint(eventTarget) {
+	if (_isDecimal) {
+		eventTarget.removeEventListener('click', displayDigits);  
+	}
+}
+
 // Store user numbers and selected operator
 function storeNumOperator(operator) {
 	if (_firstNum === null) {
-		_firstNum = _displayVar;
+		_firstNum = limitDigitDisplay(_displayVar);
 	} else {
-		_secondNum = _displayVar;
+		_secondNum = limitDigitDisplay(_displayVar);
 	}
 	_currOperator = operator;
 }
@@ -148,13 +183,20 @@ function storeNumOperator(operator) {
 
 // Limit number of display digits to 10
 function limitDigitDisplay(text) {
-	return (text.length > 10 ? text.substring(0, 10) : text);
+	if (text.toString().length > 10) {
+		return text.toString().substr(0,10);
+	}
+	else {
+		return text;
+	 }
 }
 
 // Add event listener to clear button
 const clearBtn = document.querySelector('#ac');
 clearBtn.addEventListener('click', event => {
 	clearDisplay();
+	const decimalBtn = document.querySelector('#decimal');
+	decimalBtn.addEventListener('click', displayDigits);
 	_firstNum = _secondNum = _currOperator = null;
 	_isError = false;
 });
@@ -163,21 +205,34 @@ clearBtn.addEventListener('click', event => {
 // Add event listener that executes operation to equal button
 const equalBtn = document.querySelector('#equal');
 equalBtn.addEventListener('click', event => {
-	_secondNum = _displayVar;
+	_secondNum = limitDigitDisplay(_displayVar);
 	_displayVar = operate(_currOperator, _firstNum, _secondNum);
+	const decimalBtn = document.querySelector('#decimal');
+	decimalBtn.addEventListener('click', displayDigits);
 
 	const display = document.querySelector('#display');
-	display.textContent = _displayVar;
-
-	if (_isError) {
+	if (!_isError) {
+		_displayVar = limitDigitDisplay(_displayVar);
+	}
+	else {
 		display.id = 'error-message';
-	} 
-
+	}
+	
+	display.textContent = _displayVar;
 	_firstNum = _displayVar;
 	_secondNum = null;
 	_currOperator = null;
+	_isClear = true;
 });
 
-displayDigits();
+// Converts user number to percentage
+const percentageBtn = document.querySelector('#percentage'); 
+percentageBtn.addEventListener('click', percentage);
+
+// Allows user to delete the last number in case of selection error
+const deleteBtn = document.querySelector('#delete');
+deleteBtn.addEventListener('click', deleteOneNumber);
+
 addOperatorListener();
+
 
